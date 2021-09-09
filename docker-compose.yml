@@ -1,0 +1,14 @@
+services:
+  course-search:
+    build: .
+    depends_on:
+      - typesense
+  typesense:
+    image: typesense/typesense:0.21.0
+    environment:
+      - TYPESENSE_API_KEY=xyz
+      - TYPESENSE_DATA_DIR=/data
+    ports: 
+      - "8108:8108"
+    volumes: 
+      - "/tmp/typesense-data:/data"
