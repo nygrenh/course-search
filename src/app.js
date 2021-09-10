@@ -1,5 +1,4 @@
 const Typesense = require('typesense')
-console.log('hello wolrd')
 
 let client = new Typesense.Client({
     'nodes': [{
@@ -14,6 +13,7 @@ let client = new Typesense.Client({
   let courseSchema = {
     'name': 'courses',
     'fields': [
+      {'name': 'id', 'type': 'int32' },
       {'name': 'name', 'type': 'string' },
       {'name': 'teachers', 'type': 'string[]', 'facet': true },
       {'name': 'study_level', 'type': 'string' },
@@ -24,9 +24,9 @@ let client = new Typesense.Client({
       {'name': 'degree_programme', 'type': 'string' },
       {'name': 'study_strack', 'type': 'string' }
     ],
-    'default_sorting_field': 'name'
+    'default_sorting_field': 'id'
   }
-  
+
   client.collections().create(courseSchema)
     .then(function (data) {
       console.log(data)
