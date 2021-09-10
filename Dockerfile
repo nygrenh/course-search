@@ -1,7 +1,8 @@
-FROM ubuntu:20.04
+FROM node:14.17.6
 
 WORKDIR /usr/src/course-search
 COPY /src/ .
-RUN apt-get update && apt-get install -y curl
+COPY ["package.json", "package-lock.json*", "./"]
+RUN npm ci
 
-CMD ["./app.sh"]
+CMD ["node", "app.js"]
