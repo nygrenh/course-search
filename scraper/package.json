@@ -1,0 +1,15 @@
+{
+  "name": "scraper",
+  "scripts": {
+    "start": "env NODE_ENV=development ts-node -O \"{\\\"module\\\":\\\"commonjs\\\"}\" index.ts",
+    "generate-guards": "rm coursesResult.guard.ts && ts-auto-guard --export-all --paths coursesResult.ts"
+  },
+  "devDependencies": {
+    "ts-auto-guard": "^1.0.0-alpha.26",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
+  },
+  "dependencies": {
+    "axios": "^0.21.4"
+  }
+}
