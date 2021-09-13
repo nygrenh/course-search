@@ -4,6 +4,7 @@ import { isCoursesResult } from "./coursesResult.guard";
 import fs from "fs/promises";
 
 async function main() {
+  fs.mkdir("data")
   let i = 0;
   while (true) {
     const fetchResult = await fetchAndValidate(
