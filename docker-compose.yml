@@ -18,3 +18,5 @@ services:
       - typesense
     ports:
       - "4365:4365"
+    volumes:
+      - "./frontend:/app"
