@@ -27,11 +27,12 @@ async function main () {
         {'name': 'is_open_university_course', 'type': 'bool'}
       ],
     }
-
+    if ((await client.collections().retrieve()) == '') {
     client.collections().create(courseSchema)
       .then(function (data) {
         console.log(data)
       })
+    } else console.log("Schema already exists")
 }
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
