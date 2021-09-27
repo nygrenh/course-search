@@ -1,4 +1,6 @@
+import Scrape from "./scraper"
 const Typesense = require('typesense')
+
 
 async function main () {
   await sleep(10*1000)
@@ -11,7 +13,6 @@ async function main () {
       'apiKey': 'xyz',
       'connectionTimeoutSeconds': 10
     })
-
     let courseSchema = {
       'name': 'courses',
       'fields': [
@@ -22,19 +23,22 @@ async function main () {
         {'name': 'course_code', 'type': 'string' },
         {'name': 'language', 'type': 'string' },
         {'name': 'type', 'type': 'string' },
-        {'name': 'degree_programme', 'type': 'string' },
-        {'name': 'study_strack', 'type': 'string' },
+        {'name': 'degree_programme', 'type': 'string[]' },
+        {'name': 'study_track', 'type': 'string[]' },
         {'name': 'is_open_university_course', 'type': 'bool'}
       ],
     }
     if ((await client.collections().retrieve()) == '') {
     client.collections().create(courseSchema)
-      .then(function (data) {
+      .then(function (data: any) {
         console.log(data)
       })
     } else console.log("Schema already exists")
+
+    await Scrape(client);
+
 }
 
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+const sleep = (waitTimeInMs: any) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 main()

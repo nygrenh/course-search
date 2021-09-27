@@ -2,8 +2,9 @@ import axios from "axios";
 import { CoursesResult } from "./coursesResult";
 import { isCoursesResult } from "./coursesResult.guard";
 import fs from "fs/promises";
+const Typesense = require('typesense') //typesense has no ts types
 
-async function main() {
+ async function Scrape(client : any) { //Typesense client
   fs.mkdir("data")
   let i = 0;
   while (true) {
@@ -24,6 +25,21 @@ async function main() {
       }, queryExceedsMaxResultWindow: ${res.queryExceedsMaxResultWindow}`
     );
     i = i + 1;
+    res.hits.forEach(async hit => {
+      let document = {
+        'name': hit.name.en || hit.name.fi || "",
+        'teachers': hit.teacherNames,
+        'study_level': hit.studyLevel,
+        'credits': hit.credits.min || 0,
+        'course_code': hit.code,
+        'language': hit.teachingLanguages.toString(),
+        'type': hit.type,
+        'degree_programme': hit.degreeProgrammeIds,
+        'study_track': hit.studyTrackGroupIds,
+        'is_open_university_course': hit.isOpenUniversityCourse
+      }
+      await client.collections('courses').documents().create(document)
+    })
     if (!fetchResult.cached) {
       await sleep(2000);
     }
@@ -93,4 +109,4 @@ function sleep(ms: number) {
   });
 }
 
-main();
+export default Scrape

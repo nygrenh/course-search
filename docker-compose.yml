@@ -1,6 +1,6 @@
 services:
-  course-search:
-    build: .
+  scraper:
+    build: scraper
     depends_on:
       - typesense
   typesense:
