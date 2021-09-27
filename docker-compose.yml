@@ -8,7 +8,13 @@ services:
     environment:
       - TYPESENSE_API_KEY=xyz
       - TYPESENSE_DATA_DIR=/data
-    ports: 
+    ports:
       - "8108:8108"
-    volumes: 
+    volumes:
       - "/tmp/typesense-data:/data"
+  frontend:
+    build: frontend
+    depends_on:
+      - typesense
+    ports:
+      - "4365:4365"
