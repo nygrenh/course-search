@@ -6,16 +6,14 @@ RUN apt-get update \
 
 RUN mkdir -p /app && chown -R node /app
 
-USER node
-
 WORKDIR /app
 
-COPY --chown=node package.json /app/
-COPY --chown=node package-lock.json /app/
+COPY package.json /app/
+COPY package-lock.json /app/
 
 RUN npm ci
 
-COPY --chown=node . /app
+COPY . /app
 
 EXPOSE 4365
 
