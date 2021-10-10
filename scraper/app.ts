@@ -1,9 +1,13 @@
 import Scrape from "./scraper"
 const Typesense = require('typesense')
 
-
+/*
+*  Set up TypeSense for the scraper.
+*  We connect to the container and give it a schema.
+*  After making the schema we start the scraper.
+*/
 async function main () {
-  await sleep(10*1000)
+  await sleep(10*1000) /* Temporal hack to wait the container to be ready. Typesense has healtcheck pattenrn on /health which we could use.*/
   let client = new Typesense.Client({
       'nodes': [{
         'host': 'typesense', 
@@ -39,6 +43,7 @@ async function main () {
 
 }
 
+/* Function for waiting in async functions. */
 const sleep = (waitTimeInMs: any) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 main()
