@@ -38,6 +38,7 @@ A self built frontend built upon Next.js with React that provides the user inter
 Communication channel is http requests between frontend and typesense and scraper and typesense.
 
 Not in development because they are only available in localhost. If we were to deploy this to a production environment, it would be easy to setup https.
+
 * Pros and cons of the open-source components/modules used for developing the system, and the modules/components you have built (3 points)
 * cons: studies.helsinki.fi API is limited to 30 results per page, meaning we have to fetch data from all pages in different queries.
 * pros: Typesense supports spelling mistakes
