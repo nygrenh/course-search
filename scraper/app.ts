@@ -32,7 +32,7 @@ async function main () {
         {'name': 'is_open_university_course', 'type': 'bool'}
       ],
     }
-    if ((await client.collections().retrieve()) == '') {
+    if ((await client.collections().retrieve()) == '') { /* Check if the schema exists already. */
     client.collections().create(courseSchema)
       .then(function (data: any) {
         console.log(data)
