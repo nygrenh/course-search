@@ -6,7 +6,9 @@ Goal of this project is to create an alternative search engine for https://studi
 
 You can find the necessary prerequisites to get the project running and their installation instructions in our [installation instructions](docs/Installation.md).
 ## Run the project
-`docker-compose up`
+
+Run `npm ci` in `frontend` folder.
+In root run `docker-compose up`
 
 Frontend will be available at http://localhost:4365/.
 
