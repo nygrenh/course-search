@@ -53,8 +53,14 @@ Not in development because they are only available in localhost. If we were to d
 * pros: react allowed us to manage ui declaratively, meaning we don't have to make cumbersome manual ui changes
 * cons: had some file syncing problems with docker compose relating to permissions
 * Which of the fallacies of the distributed system does your system violate, and how (0.5 points).
-
-all of them
+    - The network is reliable: yes, because if network stops working we cannot search anymore
+    - Latency is zero: no
+    - Bandwidth is infinite: yes, we download a lot of data from the api
+    - The network is secure: no, this does not need to be secure, nothing private
+    - Topology doesn't change: no, should not affect the system
+    - There is one administrator: no, there is no administrator
+    - Transport cost is zero: wat
+    - The network is homogeneous: no, does not matter
 
 ## Extending current architecture
 
