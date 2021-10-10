@@ -38,7 +38,7 @@ const Typesense = require('typesense') //typesense has no ts types
         'study_level': hit.studyLevel,
         'credits': hit.credits.min || 0,
         'course_code': hit.code,
-        'language': hit.teachingLanguages.toString(),
+        'language': hit.teachingLanguages.map(o => o.en || o.fi || o.sv || "").join(", "),
         'type': hit.type,
         'degree_programme': hit.degreeProgrammeIds,
         'study_track': hit.studyTrackGroupIds,
