@@ -3,7 +3,13 @@ import { CoursesResult } from "./coursesResult";
 import { isCoursesResult } from "./coursesResult.guard";
 import fs from "fs/promises";
 const Typesense = require('typesense') //typesense has no ts types
-
+/* 
+* Scraper for getting course data from studies.helsinki.fi
+* We save results to the cache so we don't have to query the api every time.
+* studies.helsinki.fi gives maximum of 30 results per page so we have to query
+* over hunders pages separately. We wait two seconds between querys so we don't get
+* blocked.
+*/
  async function Scrape(client : any) { //Typesense client
   fs.mkdir("data")
   let i = 0;
@@ -25,7 +31,7 @@ const Typesense = require('typesense') //typesense has no ts types
       }, queryExceedsMaxResultWindow: ${res.queryExceedsMaxResultWindow}`
     );
     i = i + 1;
-    res.hits.forEach(async hit => {
+    res.hits.forEach(async hit => { /* Here we push data to typesense. */
       let document = {
         'name': hit.name.en || hit.name.fi || "",
         'teachers': hit.teacherNames,
