@@ -1,13 +1,11 @@
 # Course Search
 
-* System Goals (1 point)
+Group name: -
 
 Goal of this project is to create an alternative search engine for https://studies.helsinki.fi/courses where results are shown as you type.
 This alternative search engine is intended to provide a user experience that we feel is better than the current one provided by the University of Helsinki.
 
 ## System Architecture
-
-* System architecture (2 points)
 
 Typesense, Scrape and Frontend are each in its own Docker container. The Scraper fetches data from the studies.helsinki.fi API and from the data we pick the relevant data that we push to the Typesense search engine database.
 
@@ -16,63 +14,94 @@ Frontend directly queries data from typesense and displays results.
 ![Course Search Architecture](../images/architecture.jpg)
 *A diagram representing the system architecture*
 
-
-* Components / Module description including the interfaces exposed between the modules (2 points)
-
-Interface: typesense api (with our schema)
-
 ### Typesense
 
-An open source search engine that supports spelling mistakes and instantaneous search from database as you type. [More information here](https://typesense.org/).
+An open source search engine that supports spelling mistakes and instantaneous search from database as you type. [More information here](https://typesense.org/). The interface we expose for the frontend and scraper is the Typesense API, which uses our own schema:
+
+```js
+let courseSchema = {
+    'name': 'courses',
+    'fields': [
+    {'name': 'name', 'type': 'string' },
+    {'name': 'teachers', 'type': 'string[]', 'facet': true },
+    {'name': 'study_level', 'type': 'string' },
+    {'name': 'credits', 'type': 'int32' },
+    {'name': 'course_code', 'type': 'string' },
+    {'name': 'language', 'type': 'string' },
+    {'name': 'type', 'type': 'string' },
+    {'name': 'degree_programme', 'type': 'string[]' },
+    {'name': 'study_track', 'type': 'string[]' },
+    {'name': 'is_open_university_course', 'type': 'bool'}
+    ],
+}
+```
 
 ### Scraper
 
-Self-built scraper that fetches necessary course information from studies.helsinki.fi, does type checking to the API data and passes it to Typesense's collection.
+Self-built scraper that fetches necessary course information from studies.helsinki.fi. It fetches currently data only for period 1, year 2021. Scraper does type checking to the API data and passes the necessary data from fetched results to Typesense using the schema defined above.
 
 ### Frontend
 
 A self built frontend built upon Next.js with React that provides the user interface for search queries and filtering.
 
-* Communication channel between the modules. For instance, do the modules use secure communication to communicate with each other, if yes, how? (2 points)
+## Communication
 
-Communication channel is http requests between frontend and typesense and scraper and typesense.
+Communication channel between our services defined in the Architecture picture is http. Currently in development we do not use https, because our service are only available on localhost. If we were to deploy this to a production environment, it would be easy to setup https.
 
-Not in development because they are only available in localhost. If we were to deploy this to a production environment, it would be easy to setup https.
+## Pros & Cons
 
-* Pros and cons of the open-source components/modules used for developing the system, and the modules/components you have built (3 points)
-* cons: studies.helsinki.fi API is limited to 30 results per page, meaning we have to fetch data from all pages in different queries.
-* pros: Typesense supports spelling mistakes
-* pros: Typesense search as you type
-* pros: typesense easy to use
-* cons: Typesense schema does not support objects
-* pros: Searching can be done
-* con: courses.helsinki.fi api not made for this
-* pros: typescript gave us type safety and it made writing a parser for the courses.helsinki.fi data much easier
-* pros: next.js made setting up the frontend really easy
-* pros: there were helper components that made it easy to integrate typesense to react
-* pros: react allowed us to manage ui declaratively, meaning we don't have to make cumbersome manual ui changes
-* cons: had some file syncing problems with docker compose relating to permissions
-* Which of the fallacies of the distributed system does your system violate, and how (0.5 points).
-    - The network is reliable: yes, because if network stops working we cannot search anymore
-    - Latency is zero: no
-    - Bandwidth is infinite: yes, we download a lot of data from the api
-    - The network is secure: no, this does not need to be secure, nothing private
-    - Topology doesn't change: no, should not affect the system
-    - There is one administrator: no, there is no administrator
-    - Transport cost is zero: wat
-    - The network is homogeneous: no, does not matter
+During development we have encountered challenges and successes. Here are few worth mentioning.
 
-## Extending current architecture
+### Pros
 
-* What needs to be added to your system be used to be integrated/extended by another system (2 points).
+* Typesense supports small spelling mistakes
+* Typesense does search as you type
+* Typesense was easy to setup and easy to use
+* Typescript gave us type safety and it made writing a parser for the courses.helsinki.fi data much easier
+* Next.js made setting up the frontend really easy
+* There were helper components that made it easy to integrate Typesense to React
+* React allowed us to manage UI declaratively, meaning we don't have to make cumbersome manual UI changes
+
+### Cons
+
+* studies.helsinki.fi API is limited to 30 results per page, meaning we have to fetch data from all pages in different queries.
+    * Implemented naive caching, so that we don't overload the API in development.
+* Typesense schema does not support objects
+* studies.helsinki.fi API not made for an alternative search engine, i.e. we have to fetch per peiod, per page.
+    * Also fetching study track and all nested information requires many nested requests.
+* Had some file syncing problems with docker compose relating to permissions
+
+## Fallacies
+
+Which of the fallacies of the distributed system does your system violate, and how?
+List of fallacies fetched from [Wikipedia](https://en.wikipedia.org/wiki/Fallacies_of_distributed_computing).
+
+- The network is reliable:
+    - Yes, because if network stops working we cannot fetch from external API anymore.
+- Latency is zero: 
+    - No
+- Bandwidth is infinite: 
+    - Yes, we download a lot of data from the API, but try to query every 2 seconds not to overload the network and server.
+- The network is secure: 
+    - No, this does not need to be secure, nothing private.
+- Topology doesn't change: 
+    - No, should not affect the system
+- There is one administrator: 
+    - No, there is no administrator in our project
+- Transport cost is zero:
+    - ...
+- The network is homogeneous: 
+    - No, does not matter
+
+## Extending current architecture & Evaluation of performance
 
 To extend the search engine to support different search data, you need to create a schema for Typesense and create a new scraper for the new API endpoint. In the Frontend service, you need to create new page.
 
-* Evaluation. Methodology used for evaluating the system performance, and the key results (2 points)
-
-From typesense readme.
-
+We did not do our own evaluation, but the Typesense is the heaviest component and they have [their own benchmarking](https://github.com/typesense/typesense#benchmarks), which is done properly.
 ## Future work for improvements
-* Avenues for future work (0.5 points).
 
-Better filtering
+  - Better filtering
+  - Better UI and UX
+  - Extend scraper to fetch all periods for year 2021
+  - Extend fetching also the faculties based on the course data, so search/filtering can be done more properly
+  - Would be great if you could fetch the enrollment links so you could enroll via SISU from our search engine
