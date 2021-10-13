@@ -3,7 +3,7 @@ import { CoursesResult } from "./coursesResult";
 import { isCoursesResult } from "./coursesResult.guard";
 import fs from "fs/promises";
 const Typesense = require('typesense') //typesense has no ts types
-/* 
+/*
 * Scraper for getting course data from studies.helsinki.fi
 * We save results to the cache so we don't have to query the api every time.
 * studies.helsinki.fi gives maximum of 30 results per page so we have to query
@@ -42,7 +42,10 @@ const Typesense = require('typesense') //typesense has no ts types
         'type': hit.type,
         'degree_programme': hit.degreeProgrammeIds,
         'study_track': hit.studyTrackGroupIds,
-        'is_open_university_course': hit.isOpenUniversityCourse
+        'is_open_university_course': hit.isOpenUniversityCourse,
+        'course_page_url': hit.coursePageUrl,
+        'summary': hit.cmsFieldSummary.en || hit.cmsFieldSummary.fi || hit.cmsFieldSummary.sv || "",
+        'long_description': hit.cmsBody?.en || hit.cmsBody?.fi || hit.cmsBody?.sv || "",
       }
       await client.collections('courses').documents().create(document)
     })

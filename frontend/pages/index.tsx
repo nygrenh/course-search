@@ -4,6 +4,7 @@ import { Hits, InstantSearch, SearchBox } from "react-instantsearch-dom";
 import TypesenseInstantSearchAdapter from "typesense-instantsearch-adapter";
 import React from "react";
 import Hit from "../components/Hit";
+import CustomSearchBox from "../components/CustomSearchBox";
 
 const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
@@ -17,7 +18,7 @@ const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
     ]
   },
   additionalSearchParameters: {
-    queryBy: "name,teachers,course_code"
+    queryBy: "name,teachers,course_code,summary"
   }
 });
 
@@ -34,7 +35,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <InstantSearch indexName="courses" searchClient={searchClient}>
-          <SearchBox autoFocus searchAsYouType showLoadingIndicator />
+          <CustomSearchBox />
           <Hits hitComponent={Hit} />
         </InstantSearch>
       </main>

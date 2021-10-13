@@ -10,8 +10,8 @@ async function main () {
   await sleep(10*1000) /* Temporal hack to wait the container to be ready. Typesense has healtcheck pattenrn on /health which we could use.*/
   let client = new Typesense.Client({
       'nodes': [{
-        'host': 'typesense', 
-        'port': '8108',      
+        'host': 'typesense',
+        'port': '8108',
         'protocol': 'http'
       }],
       'apiKey': 'xyz',
@@ -23,13 +23,16 @@ async function main () {
         {'name': 'name', 'type': 'string' },
         {'name': 'teachers', 'type': 'string[]', 'facet': true },
         {'name': 'study_level', 'type': 'string' },
-        {'name': 'credits', 'type': 'int32' },
+        {'name': 'credits', 'type': 'float' },
         {'name': 'course_code', 'type': 'string' },
         {'name': 'language', 'type': 'string' },
         {'name': 'type', 'type': 'string' },
         {'name': 'degree_programme', 'type': 'string[]' },
         {'name': 'study_track', 'type': 'string[]' },
-        {'name': 'is_open_university_course', 'type': 'bool'}
+        {'name': 'is_open_university_course', 'type': 'bool'},
+        {'name': 'course_page_url', 'type': 'string'},
+        {'name': 'summary', 'type': 'string'},
+        {'name': 'long_description', 'type': 'string'},
       ],
     }
     if ((await client.collections().retrieve()) == '') { /* Check if the schema exists already. */

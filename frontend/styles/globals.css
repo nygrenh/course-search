@@ -14,3 +14,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.ais-Hits-item {
+  list-style-type: none;
+}
+
+.ais-Hits-list {
+  padding: 0;
+}
