@@ -153,6 +153,7 @@ We did not do our own evaluation on the system performance, but the Typesense is
 Because we have to fetch 30 instances per query from studies.helsinki.fi, the initial data fetching by the scraper takes approximately 7 minutes for one period. If we would fetch all the periods and summer period for year 2021, the initial fetching would take up to 30 minutes. For the future, if we would fetch the metadatas from the course querys, i.e. faculty, study programme etc. this would probably take hours. But once we have them fetched and pushed into Typesense, we would have the data.
 
 Our weakness is that we are heavily dependent on studies.helsinki.fi API and if this would not follow API stability, our product would break and would require re-writing.
+
 ## Future work for improvements
 
   - Better filtering
