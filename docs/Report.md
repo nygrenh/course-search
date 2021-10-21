@@ -3,7 +3,7 @@
 Group name: -
 
 Goal of this project is to create an alternative search engine for https://studies.helsinki.fi/courses where results are shown as you type.
-This alternative search engine is intended to provide a user experience that we feel is better than the current one provided by the University of Helsinki.
+This alternative search engine is intended to provide a user experience that we feel is better than the current one provided by the University of Helsinki. The project is inspired by the frustrations faced by the authors when trying to find courses from studies.helsinki.fi
 
 ## System Architecture
 
@@ -38,11 +38,12 @@ let courseSchema = {
 
 ### Scraper
 
-Self-built scraper that fetches necessary course information from studies.helsinki.fi. It fetches currently data only for period 1, year 2021. Scraper does type checking to the API data and passes the necessary data from fetched results to Typesense using the schema defined above.
+Self-built scraper that fetches necessary course information from studies.helsinki.fi. It fetches currently data only for period 1, year 2021. Scraper does type checking to the API data and passes the necessary data from fetched results to Typesense using the schema defined above. Scraper is implemented with Node.js and written with Typescript. It includes type definitions for the scraped data which was validated with ts-auto-guard​.
 
 ### Frontend
 
 A self built frontend built upon Next.js with React that provides the user interface for search queries and filtering.
+Frontend communicates with typesense and is built with Typescript and Next.js.
 
 ## Communication
 
