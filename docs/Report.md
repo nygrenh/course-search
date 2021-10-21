@@ -57,19 +57,24 @@ During development we have encountered challenges and successes. Here are few wo
 * Typesense supports small spelling mistakes
 * Typesense does search as you type
 * Typesense was easy to setup and easy to use
+* Typesense has no TypeScript bindings available
 * Typescript gave us type safety and it made writing a parser for the courses.helsinki.fi data much easier
 * Next.js made setting up the frontend really easy
 * There were helper components that made it easy to integrate Typesense to React
 * React allowed us to manage UI declaratively, meaning we don't have to make cumbersome manual UI changes
+* Ts-auto-guard was silently generating incorrect guard functions if one had accidentally turned the TypeScript strict mode off, we created an issue of this: https://github.com/rhys-vdw/ts-auto-guard/issues/152
 
 ### Cons
 
 * studies.helsinki.fi API is limited to 30 results per page, meaning we have to fetch data from all pages in different queries.
     * Implemented naive caching, so that we don't overload the API in development.
+    * Initial scraping takes many minutes.
 * Typesense schema does not support objects
 * studies.helsinki.fi API not made for an alternative search engine, i.e. we have to fetch per peiod, per page.
     * Also fetching study track and all nested information requires many nested requests.
+* If studies.helsinki.fi API is not stable, the scraper will crash.
 * Had some file syncing problems with docker compose relating to permissions
+* No tests in our project to ensure functionality.
 
 ## Fallacies
 
@@ -102,6 +107,8 @@ We did not do our own evaluation, but the Typesense is the heaviest component an
 
   - Better filtering
   - Better UI and UX
+    - Could highlight the matched words within the search results
   - Extend scraper to fetch all periods for year 2021
   - Extend fetching also the faculties based on the course data, so search/filtering can be done more properly
   - Would be great if you could fetch the enrollment links so you could enroll via SISU from our search engine
+    - This would require Shibboleth login to UH and/or login tokens from SISU
