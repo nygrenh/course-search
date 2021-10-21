@@ -78,6 +78,50 @@ During development we have encountered challenges and successes. Here are few wo
 * No tests in our project to ensure functionality.
 * We don't know when our data is invalid, i.e. if some description for a course has changed.
 
+
+### Alternative open source components
+
+Alternatives for search library:
+
+- Postgres full text search
+    * Pro: also gives a relational database so that we could store also other data that we don't need to search for.
+    * Con: setting up search to work correctly seems like a lot of work
+- Elasticsearch
+    * Pro: Good library, widely used
+    * Con: Resource heavy
+    * Con not as easy to setup as typesense
+- Typesense:
+    * Pro: easy to setup
+    * Pro: Does exactly what we need
+    * Pro: No need to build extra backend in front of it
+
+Alternatives to js backend framework:
+
+* Create react-app
+
+   * Pro: Widely used and easy to use
+   * Con: authors are not as familiar with it as next.js
+* Next.js
+  - Pro: Easy to use
+  - Pro: Authors familiar with it
+  - Pro lot of avenues for performance optimization like server side rendering
+
+
+Alternatives to js ui framework:
+
+- React
+    * Pro: declarative ui framework -- makes frontend development easy
+    * Con: different approach to web ui development than traditional approaches
+    * Pro: authors were familiar with it
+    * Pro: really popular
+- Vanilla js:
+    * Pro lightweight
+    * Con: leads easily to big ball of mud
+- Vue.js:
+    * Pro declarative ui framework
+    * Con: authors not familiar with it
+
+
 ## Fallacies
 
 Which of the fallacies of the distributed system does your system violate, and how?
@@ -85,19 +129,19 @@ List of fallacies fetched from [Wikipedia](https://en.wikipedia.org/wiki/Fallaci
 
 - The network is reliable:
     - Yes, because if network stops working we cannot fetch from external API anymore.
-- Latency is zero: 
+- Latency is zero:
     - No, we have latency when fetching data.
-- Bandwidth is infinite: 
+- Bandwidth is infinite:
     - Yes, we download a lot of data from the API, but try to query every 2 seconds not to overload the network and server.
-- The network is secure: 
+- The network is secure:
     - No, this does not need to be secure, nothing private.
-- Topology doesn't change: 
+- Topology doesn't change:
     - No, should not affect the system
-- There is one administrator: 
+- There is one administrator:
     - No, there is no administrator in our project
 - Transport cost is zero:
     - ...
-- The network is homogeneous: 
+- The network is homogeneous:
     - No, does not matter
 
 ## Extending current architecture & Evaluation of performance
