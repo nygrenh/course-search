@@ -105,7 +105,8 @@ List of fallacies fetched from [Wikipedia](https://en.wikipedia.org/wiki/Fallaci
 To extend the search engine to support different search data, you need to create a schema for Typesense and create a new scraper for the new API endpoint. In the Frontend service, you need to create new page.
 
 We did not do our own evaluation on the system performance, but the Typesense is the heaviest component and they have [their own benchmarking](https://github.com/typesense/typesense#benchmarks), which is done properly.
-Because we have to fetch 30 instances per query from studies.helsinki.fi, the initial data fetching by the scraper takes minutes for one period. If we would fetch all the periods and summer period for year 2021, the initial fetching would take up to 30 minutes. For the future, if we would fetch the metadatas from the course querys, i.e. faculty, study programme etc. this would probably take hours. But once we have them fetched and pushed into Typesense, we would have the data.
+
+Because we have to fetch 30 instances per query from studies.helsinki.fi, the initial data fetching by the scraper takes approximately 7 minutes for one period. If we would fetch all the periods and summer period for year 2021, the initial fetching would take up to 30 minutes. For the future, if we would fetch the metadatas from the course querys, i.e. faculty, study programme etc. this would probably take hours. But once we have them fetched and pushed into Typesense, we would have the data.
 
 Our weakness is that we are heavily dependent on studies.helsinki.fi API and if this would not follow API stability, our product would break and would require re-writing.
 ## Future work for improvements
