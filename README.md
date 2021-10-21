@@ -10,7 +10,7 @@ You can find the necessary prerequisites to get the project running and their in
 ## Run the entire project
 
 Run `npm ci` in `frontend` folder.
-In root run `docker-compose up`
+In root run `docker-compose build` and `docker-compose up`
 
 Frontend will be available at http://localhost:4365/.
 
