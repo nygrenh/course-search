@@ -86,7 +86,7 @@ List of fallacies fetched from [Wikipedia](https://en.wikipedia.org/wiki/Fallaci
 - The network is reliable:
     - Yes, because if network stops working we cannot fetch from external API anymore.
 - Latency is zero: 
-    - No
+    - No, we have latency when fetching data.
 - Bandwidth is infinite: 
     - Yes, we download a lot of data from the API, but try to query every 2 seconds not to overload the network and server.
 - The network is secure: 
