@@ -15,7 +15,7 @@ async function main () {
         'protocol': 'http'
       }],
       'apiKey': 'xyz',
-      'connectionTimeoutSeconds': 10
+      'connectionTimeoutSeconds': 20
     })
     let courseSchema = {
       'name': 'courses',

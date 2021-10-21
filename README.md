@@ -16,7 +16,7 @@ Frontend will be available at http://localhost:4365/.
 
 ## Code documentation
 
-In the `Frontend` folder you can find the web page displayed for the user. The `Scraper` folder is where all the magic happens fetching the course information from UH API. Fractions of the codes are documented in the source files.
+In the `Frontend` folder you can find the web page displayed for the user. The `Scraper` folder is where all the magic happens fetching the course information from UH API. Fractions of the codes are documented in the source files and others are found in [docs](docs/).
 
 ## License
 
