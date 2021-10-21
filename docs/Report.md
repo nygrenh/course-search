@@ -38,7 +38,7 @@ let courseSchema = {
 
 ### Scraper
 
-Self-built scraper that fetches necessary course information from studies.helsinki.fi. It fetches currently data only for period 1, year 2021. Scraper does type checking to the API data and passes the necessary data from fetched results to Typesense using the schema defined above. Scraper is implemented with Node.js and written with Typescript. It includes type definitions for the scraped data which was validated with ts-auto-guard​.
+Self-built scraper that fetches necessary course information from studies.helsinki.fi. It fetches (with http get requestrs) currently data only for period 1, year 2021. Scraper does type checking to the API data and passes the necessary data from fetched results to Typesense using the schema defined above. Scraper is implemented with Node.js and written with Typescript. It includes type definitions for the scraped data which was validated with ts-auto-guard​.
 
 ### Frontend
 
